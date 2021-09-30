@@ -8,13 +8,17 @@ import configparser
 
 def str_check(txt):
     while True:
-        if txt[-1] == ' ':
-            txt = txt[0:-1]
-        elif txt[0] == ' ':
-            txt = txt[1:]
-        else:
-            text = txt.lower()
-            return text
+        try:
+            if txt[-1] == ' ':
+                txt = txt[0:-1]
+            elif txt[0] == ' ':
+                txt = txt[1:]
+            else:
+                text = txt.lower()
+                return text
+        except IndexError:
+            return txt
+
 
 class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
     SignalClose = QtCore.pyqtSignal(str) #создаю сигнал
@@ -35,6 +39,8 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
 
     def closeEvent(self, event): #при закрытии приложения выполняю
         self.SignalClose.emit("fuck") #отправляю сигнал
+    def showEvent(self, a0: QtGui.QShowEvent):
+        self.load_file()
 
     def conect(self):
         text = self.phone_editbox.toPlainText()
@@ -78,6 +84,7 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
 
     sel_it = -1
     check_clicl = 0
+
     def select_item(self):
         index = self.listwidget_words.currentRow()
         if index != self.sel_it:
@@ -129,6 +136,7 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
     values = []
 
     def load_file(self):
+        self.listwidget_words.clear()
         if os.path.exists(self.load_wl()):
             with open(self.load_wl(), 'r') as f:
                 try:

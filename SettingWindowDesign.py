@@ -30,6 +30,7 @@ class Setting_ui(object):
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.radio_newWL = QtWidgets.QRadioButton(self.centralwidget)
         self.radio_newWL.setChecked(True)
+        # self.radio_newWL.setEnabled(False)
         self.radio_newWL.setAutoExclusive(False)
         self.radio_newWL.setObjectName("radio_newWL")
         self.gridLayout_2.addWidget(self.radio_newWL, 0, 0, 1, 1)

@@ -12,6 +12,7 @@ class WindowSetting(QMainWindow, SettingWindowDesign.Setting_ui):
     vl_promting = "1"
     vl_new_wl = "1"
     vl_path_wl = ""
+    vl_version = "0.3"
     SignalClose = pyqtSignal(str) #создаю сигнал
     def __init__(self):
         super().__init__()
@@ -69,6 +70,7 @@ class WindowSetting(QMainWindow, SettingWindowDesign.Setting_ui):
         config.set("Settings", "new_wl", self.vl_new_wl)
         config.set("Settings", "win_error", self.vl_win_error)
         config.set("Settings", "path wl", self.vl_path_wl)
+        config.set("Settings", "version", self.vl_version)
         with open('data\setting.ini', 'w') as f:
             config.write(f)
 
@@ -80,6 +82,7 @@ class WindowSetting(QMainWindow, SettingWindowDesign.Setting_ui):
         self.vl_win_error = str(config.get("Settings", "win_error"))
         self.vl_new_wl = str(config.get("Settings", "new_wl"))
         self.vl_path_wl = str(config.get("Settings", "path wl"))
+        self.vl_version = str(config.get("Settings", "version"))
         self.checkingSet()
 
     def openFileNameDialog(self):
