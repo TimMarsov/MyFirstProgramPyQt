@@ -13,7 +13,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_WorkWindow(object):
     def setupUi(self, WorkWindow):
-        WorkWindow.setObjectName("WorkWindow")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        WorkWindow.setWindowIcon(icon)
+        WorkWindow.setObjectName("Редактор словаря")
         WorkWindow.resize(507, 391)
         self.centralwidget = QtWidgets.QWidget(WorkWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -43,6 +46,6 @@ class Ui_WorkWindow(object):
 
     def retranslateUi(self, WorkWindow):
         _translate = QtCore.QCoreApplication.translate
-        WorkWindow.setWindowTitle(_translate("WorkWindow", "MainWindow"))
+        WorkWindow.setWindowTitle(_translate("WorkWindow", "Редактор словаря"))
         self.save_edited_button.setText(_translate("WorkWindow", "Принять"))
         self.toolButton.setText(_translate("WorkWindow", "Save"))

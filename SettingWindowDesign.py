@@ -13,7 +13,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Setting_ui(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Selected, QtGui.QIcon.On)
+        MainWindow.setWindowIcon(icon)
+        MainWindow.setObjectName("Мастер настроек")
         MainWindow.resize(485, 205)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -86,13 +89,14 @@ class Setting_ui(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.radio_autoupdate.setEnabled(False)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Мастер настроек (нет)"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Welcome to the setting!</span></p></body></html>"))
         self.radio_newWL.setText(_translate("MainWindow", "Создвать новый WordList из слов с оишбками"))
         self.radio_promting.setText(_translate("MainWindow", "Показывать подсказки"))

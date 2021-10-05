@@ -1,7 +1,7 @@
 import sys
 
 from EditWLDesign import *
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui, Qt
 import json
 import os
 import configparser
@@ -36,6 +36,8 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
         self.load_file()
         self.phone_editbox.textChanged.connect(self.checking_return)
         QtWidgets.QShortcut(QtGui.QKeySequence('Ctrl+S'), self).activated.connect(self.conect)
+        self.listwidget_words.setContextMenuPolicy(Qt.Qt.CustomContextMenu)
+        self.listwidget_words.customContextMenuRequested.connect(self.double_click)
 
     def closeEvent(self, event): #при закрытии приложения выполняю
         self.SignalClose.emit("fuck") #отправляю сигнал
@@ -55,7 +57,9 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
             txt = str_check(QtGui.QGuiApplication.clipboard().text())
             self.phone_editbox.setText(text + txt)
 
+    check_clicl = 0
     def double_click(self):
+        self.check_clicl = 1
         self.listwidget_words.clearSelection()
         self.phone_editbox.setText('')
         if [] == self.listwidget_words.selectedItems():
@@ -70,10 +74,13 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
 
     def edit_select_item(self):
         if [] == self.listwidget_words.selectedItems():
-            if self.phone_editbox.toPlainText() != "":
-                self.listwidget_words.addItem((self.phone_editbox.toPlainText()))
-                self.phone_editbox.setText('')
-                self.double_click()
+            try:
+                if self.phone_editbox.toPlainText() != "":
+                    self.listwidget_words.addItem(str_check(self.phone_editbox.toPlainText()))
+                    self.phone_editbox.setText('')
+                    self.double_click()
+            except:
+                self.phone_editbox.setText("Извините, произошел сбой")
         else:
             index = self.listwidget_words.currentRow()
             self.listwidget_words.item(index).setText(self.phone_editbox.toPlainText())
@@ -83,7 +90,6 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
                 self.listwidget_words.takeItem(index)
 
     sel_it = -1
-    check_clicl = 0
 
     def select_item(self):
         index = self.listwidget_words.currentRow()
@@ -156,6 +162,6 @@ class WindowEdit(QtWidgets.QMainWindow, Ui_WorkWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = WindowEdit()
-    MainWindow.show()
+    EditWL = WindowEdit()
+    EditWL.show()
     sys.exit(app.exec_())
